@@ -1,0 +1,2 @@
+shift-cost: -1
+# Using a push cost of -1 will use a random value between 15 and 43. The same as the amount the spawner will give you.
