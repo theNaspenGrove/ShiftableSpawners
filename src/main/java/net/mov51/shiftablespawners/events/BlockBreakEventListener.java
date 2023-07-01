@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.CreatureSpawner;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 
@@ -12,12 +13,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import static net.mov51.shiftablespawners.ShiftableSpawners.coreProtectHelper;
-import static net.mov51.shiftablespawners.ShiftableSpawners.shiftCost;
+import static net.mov51.shiftablespawners.events.PlayerItemDamageEventListener.playersToList;
+import static net.mov51.shiftablespawners.utils.ConfigHelper.mendTool;
+import static net.mov51.shiftablespawners.utils.ConfigHelper.shiftCost;
 import static net.mov51.shiftablespawners.utils.XPHelper.hasEnoughXP;
 
 public class BlockBreakEventListener implements org.bukkit.event.Listener{
     static Random random = new Random();
-
     static RelativeLocation[] locations = {
             new RelativeLocation(0, 0, 1),
             new RelativeLocation(1, 0, 1),
@@ -58,7 +60,7 @@ public class BlockBreakEventListener implements org.bukkit.event.Listener{
         if (!event.getPlayer().getInventory().getItemInMainHand().getEnchantments().containsKey(org.bukkit.enchantments.Enchantment.SILK_TOUCH)) {
             return;
         }
-        if(!hasEnoughXP(event.getPlayer(), shiftCost)){
+        if(!hasEnoughXP(event.getPlayer(), getCost(event))){
             return;
         }
 
@@ -84,12 +86,11 @@ public class BlockBreakEventListener implements org.bukkit.event.Listener{
                 coreProtectHelper.getApi().logPlacement(event.getPlayer().getName(),loc,block.getType(),block.getBlockData());
             }
 
-            if(shiftCost != -1){
-                event.getPlayer().giveExp(-shiftCost);
-            }else{
-                event.getPlayer().giveExp(-event.getExpToDrop());
-            }
+            event.getPlayer().giveExp(-getCost(event));
             event.setExpToDrop(0);
+            if(mendTool && event.getPlayer().getInventory().getItemInMainHand().getEnchantments().containsKey(Enchantment.MENDING)){
+                playersToList.add(event.getPlayer().getUniqueId());
+            }
         } else {
             //cancel event
             event.setCancelled(true);
@@ -113,6 +114,14 @@ public class BlockBreakEventListener implements org.bukkit.event.Listener{
             }
         }
         return null;
+    }
+
+    private static int getCost(BlockBreakEvent event){
+        if(shiftCost != -1){
+            return shiftCost;
+        }else{
+            return event.getExpToDrop();
+        }
     }
 }
 

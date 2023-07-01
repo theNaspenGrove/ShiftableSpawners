@@ -1,2 +1,4 @@
 shift-cost: -1
 # Using a push cost of -1 will use a random value between 15 and 43. The same as the amount the spawner will give you.
+mend-tool: true
+# If true, and the player's tool has mending when it's used to shift a spawner, it will use 1 xp to prevent damage to the tool
