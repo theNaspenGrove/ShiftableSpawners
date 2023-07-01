@@ -2,3 +2,5 @@ name: ShiftableSpawners
 version: '${project.version}'
 main: net.mov51.shiftablespawners.ShiftableSpawners
 api-version: 1.19
+softdepend:
+  - 'CoreProtect'

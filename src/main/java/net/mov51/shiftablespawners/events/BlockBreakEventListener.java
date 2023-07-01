@@ -79,6 +79,9 @@ public class BlockBreakEventListener implements org.bukkit.event.Listener{
             newSpawner.setRequiredPlayerRange(spawner.getRequiredPlayerRange());
             newSpawner.setSpawnRange(spawner.getSpawnRange());
             newSpawner.update();
+            if(coreProtectHelper.isCoreProtectEnabled()){
+                coreProtectHelper.getApi().logPlacement(event.getPlayer().getName(),loc,block.getType(),block.getBlockData());
+            }
 
             if(pushCost != -1){
                 event.getPlayer().giveExp(-pushCost);
