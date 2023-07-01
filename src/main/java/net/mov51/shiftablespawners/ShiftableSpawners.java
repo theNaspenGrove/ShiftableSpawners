@@ -7,7 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class ShiftableSpawners extends JavaPlugin {
     public static Plugin plugin;
-    public static int pushCost = 75;
+    public static int shiftCost;
     public static CoreProtectHelper coreProtectHelper;
 
     @Override
@@ -15,6 +15,8 @@ public final class ShiftableSpawners extends JavaPlugin {
         // Plugin startup logic
         plugin = this;
         coreProtectHelper = new CoreProtectHelper();
+        this.saveDefaultConfig();
+        shiftCost = getConfig().getInt("shift-cost");
         getServer().getPluginManager().registerEvents(new BlockBreakEventListener(), this);
 
     }

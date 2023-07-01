@@ -11,8 +11,9 @@ import org.bukkit.event.block.BlockBreakEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static net.mov51.shiftablespawners.ShiftableSpawners.pushCost;
-import static net.mov51.shiftablespawners.XPHelper.hasEnoughXP;
+import static net.mov51.shiftablespawners.ShiftableSpawners.coreProtectHelper;
+import static net.mov51.shiftablespawners.ShiftableSpawners.shiftCost;
+import static net.mov51.shiftablespawners.utils.XPHelper.hasEnoughXP;
 
 public class BlockBreakEventListener implements org.bukkit.event.Listener{
     static Random random = new Random();
@@ -57,7 +58,7 @@ public class BlockBreakEventListener implements org.bukkit.event.Listener{
         if (!event.getPlayer().getInventory().getItemInMainHand().getEnchantments().containsKey(org.bukkit.enchantments.Enchantment.SILK_TOUCH)) {
             return;
         }
-        if(!hasEnoughXP(event.getPlayer(), pushCost)){
+        if(!hasEnoughXP(event.getPlayer(), shiftCost)){
             return;
         }
 
@@ -83,8 +84,8 @@ public class BlockBreakEventListener implements org.bukkit.event.Listener{
                 coreProtectHelper.getApi().logPlacement(event.getPlayer().getName(),loc,block.getType(),block.getBlockData());
             }
 
-            if(pushCost != -1){
-                event.getPlayer().giveExp(-pushCost);
+            if(shiftCost != -1){
+                event.getPlayer().giveExp(-shiftCost);
             }else{
                 event.getPlayer().giveExp(-event.getExpToDrop());
             }
