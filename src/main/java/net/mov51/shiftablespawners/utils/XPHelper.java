@@ -1,4 +1,4 @@
-package net.mov51.shiftablespawners;
+package net.mov51.shiftablespawners.utils;
 
 import org.bukkit.entity.Player;
 
