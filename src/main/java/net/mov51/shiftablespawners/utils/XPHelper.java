@@ -12,7 +12,7 @@ public class XPHelper {
             double points = (((2.5 * (level^2)) - 40.5) * level) + 360;
             return (int) Math.floor(points) + (pointsToLevel(p.getExpToLevel(),p.getExp()));
         }else{
-            double points = (((level^2) + 6) * level) + 2220;
+            double points = (((level^2) + 6) * level);
             return (int) Math.floor(points) + (pointsToLevel(p.getExpToLevel(),p.getExp()));
         }
     }
